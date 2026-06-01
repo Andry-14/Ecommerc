@@ -7,34 +7,11 @@ if($_SESSION['tipologia'] != "fornitore") {
     die("Accesso negato");
 }
 
-function getUserInfo($userId) {
-    global $conn;
-    try {
-        $sql = "SELECT * FROM Utenti WHERE idUtente = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch(Exception $e) {
-        return null;
-    }
-}
-
-function updateUserInfo($userId, $nome, $cognome, $email, $azienda) {
-    global $conn;
-    try {
-        $sql = "UPDATE Utenti SET nome = ?, cognome = ?, email = ?, azienda = ? WHERE idUtente = ?";
-        $stmt = $conn->prepare($sql);
-        return $stmt->execute([$nome, $cognome, $email, $azienda, $userId]);
-    } catch(Exception $e) {
-        return false;
-    }
-}
-
 $user = getUserInfo($_SESSION['idUtente']);
 $message = '';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if(updateUserInfo($_SESSION['idUtente'], $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['azienda'])) {
+    if(updateSupplierInfo($_SESSION['idUtente'], $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['azienda'])) {
         $message = "Profilo aggiornato con successo!";
         $user = getUserInfo($_SESSION['idUtente']);
     } else {

@@ -16,11 +16,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $customer_id = $_SESSION['idUtente'];
     $total_price = floatval($_POST['total']);
     
-    // Create order
     $order_id = createOrder($customer_id, $total_price);
     
     if($order_id) {
-        // Add items to order and update quantities
         foreach($_SESSION['carrello'] as $product_id => $quantity) {
             $product = getProductById($product_id);
             if($product) {
@@ -29,7 +27,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         
-        // Clear cart
         $_SESSION['carrello'] = [];
         
         header("Location: miei_ordini.php?success=1");

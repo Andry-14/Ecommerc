@@ -7,34 +7,11 @@ if($_SESSION['tipologia'] != "cliente") {
     die("Accesso negato");
 }
 
-function getUserInfo($userId) {
-    global $conn;
-    try {
-        $sql = "SELECT * FROM Utenti WHERE idUtente = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$userId]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch(Exception $e) {
-        return null;
-    }
-}
-
-function updateUserInfo($userId, $nome, $cognome, $email, $telefono) {
-    global $conn;
-    try {
-        $sql = "UPDATE Utenti SET nome = ?, cognome = ?, email = ?, telefono = ? WHERE idUtente = ?";
-        $stmt = $conn->prepare($sql);
-        return $stmt->execute([$nome, $cognome, $email, $telefono, $userId]);
-    } catch(Exception $e) {
-        return false;
-    }
-}
-
 $user = getUserInfo($_SESSION['idUtente']);
 $message = '';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if(updateUserInfo($_SESSION['idUtente'], $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['telefono'])) {
+    if(updateCustomerInfo($_SESSION['idUtente'], $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['telefono'])) {
         $message = "Profilo aggiornato con successo!";
         $user = getUserInfo($_SESSION['idUtente']);
     } else {

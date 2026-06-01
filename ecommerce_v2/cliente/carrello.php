@@ -7,12 +7,10 @@ if($_SESSION['tipologia'] != "cliente") {
     die("Accesso negato");
 }
 
-// Initialize cart in session
 if(!isset($_SESSION['carrello'])) {
     $_SESSION['carrello'] = [];
 }
 
-// Add to cart
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'add') {
     $product_id = intval($_POST['product_id']);
     $quantity = intval($_POST['quantity']);
@@ -28,7 +26,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['ac
     exit();
 }
 
-// Remove from cart
 if(isset($_GET['remove'])) {
     $product_id = intval($_GET['remove']);
     unset($_SESSION['carrello'][$product_id]);
@@ -36,7 +33,6 @@ if(isset($_GET['remove'])) {
     exit();
 }
 
-// Calculate total
 $total = 0;
 $cart_items = [];
 foreach($_SESSION['carrello'] as $product_id => $quantity) {

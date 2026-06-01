@@ -34,7 +34,7 @@ $products = getAllProducts();
 <div class="container">
     <h1>Gestione Prodotti</h1>
     <a href="dashboard.php">← Torna al Dashboard</a>
-    <a href="logout.php" style="background-color: #f44336;">Logout</a>
+    <a href="../autenticazione/logout.php" style="background-color: #f44336;">Logout</a>
 
     <?php
     if(isset($_GET['msg'])) {
